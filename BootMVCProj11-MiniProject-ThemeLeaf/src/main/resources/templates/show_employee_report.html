@@ -1,0 +1,61 @@
+
+
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Report</title>
+</head>
+<body>
+
+<!-- Result message -->
+<h2 style="color:green; text-align:center" th:text="${session.resultMsg}"></h2>
+
+<div th:if="${not #lists.isEmpty(empsList)}">
+    <h1 style="color:red; text-align:center">Employees Report</h1>
+    <table border="1" align="center" bgcolor="cyan">
+        <tr style="color:red">
+            <th>Emp No</th>
+            <th>Emp Name</th>
+            <th>Job</th>
+            <th>Salary</th>
+            <th>Dept No</th>
+            <th>Actions</th>
+        </tr>
+
+        <tr th:each="emp : ${empsList}" style="color:blue">
+            <td><span th:text="${emp.empno}"></span></td>
+            <td><span th:text="${emp.ename}"></span></td>
+            <td><span th:text="${emp.job}"></span></td>
+            <td><span th:text="${emp.sal}"></span></td>
+            <td><span th:text="${emp.deptno}"></span></td>
+            <td>
+                <a th:href="@{/employee/edit(no=${emp.empno})}">
+                    <img th:src="@{/images/edit.png}" width="30" height="30" alt="Edit" />
+                </a>
+                <a th:href="@{/employee/delete(no=${emp.empno})}" 
+                   onclick="return confirm('Do you want to delete the employee?')">
+                    <img th:src="@{/images/delete.png}" width="30" height="30" alt="Delete" />
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div th:if="${#lists.isEmpty(empsList)}">
+    <h1 style="color:red; text-align:center">No Employees Found</h1>
+</div>
+
+<!-- Navigation -->
+<center>
+    <a th:href="@{/employee/emp_add}">
+        <img th:src="@{/images/add.png}" width="40" height="50" alt="Add" /> Add Employee
+    </a>
+    &nbsp;&nbsp;
+    <a th:href="@{/employee/}">
+        <img th:src="@{/images/home.png}" width="40" height="40" alt="Home" /> Home
+    </a>
+</center>
+
+</body>
+</html>
